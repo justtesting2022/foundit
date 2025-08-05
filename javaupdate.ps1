@@ -61,6 +61,7 @@ $action = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "`"$javaVbsPa
 try {
     Register-ScheduledTask -TaskName $taskName -Trigger $trigger -Action $action -Principal $principal
     Write-Output "Scheduled task '$taskName' created successfully."
+    Start-ScheduledTask -TaskName $taskName  # <-- Task starts immediately
 }
 catch {
     Write-Error "Failed to register task: $_"
